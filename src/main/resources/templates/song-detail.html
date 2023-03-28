@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${song.title} + ' - Details'">Song details</title>
+</head>
+<body>
+<h1 th:text="${song.title}"></h1>
+
+<a th:href="@{/songs}" class="back-link">Back to Songs List</a>
+</body>
+</html>

@@ -5,6 +5,7 @@ import org.lessons.bestoftheyear.Song;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -40,18 +41,38 @@ public class HomeController {
     }
 
     @GetMapping("/movies")
-    public String movies(Model model) {
-        List<Movie> bestMovies = getBestMovies();
-        String titles = bestMovies.stream().map(Movie::getTitle).collect(Collectors.joining(", "));
-        model.addAttribute("titles", titles);
+    public String getMovies(Model model) {
+        List<Movie> movies = getBestMovies();
+        model.addAttribute("movies", movies);
         return "movies";
     }
 
+    @GetMapping("/movies/{id}")
+    public String movieDetail(@PathVariable(name = "id") int movieId, Model model){
+        for(Movie m:getBestMovies()){
+            if (m.getId() == movieId){
+                model.addAttribute("movie", m);
+            }
+        }
+        //richiamiamo un nuovo file template
+        return "movie-detail";
+    }
+
     @GetMapping("/songs")
-    public String songs(Model model) {
-        List<Song> bestSongs = getBestSongs();
-        String titles = bestSongs.stream().map(Song::getTitle).collect(Collectors.joining(", "));
-        model.addAttribute("titles", titles);
+    public String getSongs(Model model) {
+        List<Song> songs = getBestSongs();
+        model.addAttribute("songs", songs);
         return "songs";
+    }
+
+    @GetMapping("/songs/{id}")
+    public String songDetail(@PathVariable(name = "id") int songId, Model model){
+        for(Song s:getBestSongs()){
+            if (s.getId() == songId){
+                model.addAttribute("song", s);
+            }
+        }
+        //richiamiamo un nuovo file template
+        return "song-detail";
     }
 }

@@ -9,8 +9,12 @@
 </head>
 <body>
 <h1>Best Movies</h1>
-<p>Titoli dei migliori film:</p>
-<p> <span th:text="${titles}"></span></p>
+<h1>Best Movies of the Year</h1>
+<ul>
+    <li th:each="movie : ${movies}">
+        <a th:href="@{/movies/{id}(id=${movie.id})}" th:text="${movie.title}"></a>
+    </li>
+</ul>
 
 </body>
 </html>
